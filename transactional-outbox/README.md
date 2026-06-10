@@ -322,11 +322,7 @@ cp .env.example .env
 docker compose up --build -d
 ```
 
-Open Kafka UI:
-
-```text
-http://localhost:8085
-```
+Open Kafka UI:  http://localhost:8085
 
 Check service health:
 
@@ -344,11 +340,7 @@ Invoke-RestMethod `
   -Body '{"requestId":"10000000-0000-0000-0000-000000000001","customerId":"30000000-0000-0000-0000-000000000001","totalAmount":50.00}'
 ```
 
-Or run the included HTTP file:
-
-```text
-http/create-order.http
-```
+Or run the included HTTP file:  http/create-order.http
 
 ---
 
