@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:8080
+
+### Health
+GET {{baseUrl}}/actuator/health
+
+### Successful outbox publishes
+GET {{baseUrl}}/actuator/metrics/outbox.publish?tag=result:success
+
+### Failed outbox publishes
+GET {{baseUrl}}/actuator/metrics/outbox.publish?tag=result:failed
+
+### Pending outbox events
+GET {{baseUrl}}/actuator/metrics/outbox.events?tag=status:pending
+
+### Published outbox events
+GET {{baseUrl}}/actuator/metrics/outbox.events?tag=status:published
+
+### Dead outbox events
+GET {{baseUrl}}/actuator/metrics/outbox.events?tag=status:dead

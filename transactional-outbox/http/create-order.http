@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:8080
+
+### Create one order and store OrderCreated in outbox
+POST {{baseUrl}}/orders
+Content-Type: application/json
+X-Correlation-Id: aaaaaaaa-1111-2222-3333-aaaaaaaaaaaa
+
+{
+  "requestId": "10000000-0000-0000-0000-000000000001",
+  "customerId": "30000000-0000-0000-0000-000000000001",
+  "totalAmount": 50.00
+}
+
+### Duplicate requestId should return duplicate=true and should not create another outbox event
+POST {{baseUrl}}/orders
+Content-Type: application/json
+X-Correlation-Id: aaaaaaaa-1111-2222-3333-aaaaaaaaaaaa
+
+{
+  "requestId": "10000000-0000-0000-0000-000000000001",
+  "customerId": "30000000-0000-0000-0000-000000000001",
+  "totalAmount": 50.00
+}
