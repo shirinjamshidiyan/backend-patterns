@@ -318,7 +318,13 @@ Start the system:
 ```powershell
 git clone https://github.com/shirinjamshidiyan/backend-patterns.git
 cd backend-patterns/transactional-outbox
-cp .env.example .env
+Copy-Item .env.example .env
+docker compose up --build -d
+```
+and for reset everything:
+
+```powershell
+docker compose down -v
 docker compose up --build -d
 ```
 
@@ -340,7 +346,11 @@ Invoke-RestMethod `
   -Body '{"requestId":"10000000-0000-0000-0000-000000000001","customerId":"30000000-0000-0000-0000-000000000001","totalAmount":50.00}'
 ```
 
-Or run the included HTTP file:  http/create-order.http
+Or run the included HTTP file:
+
+```text
+http/create-order.http
+```
 
 ---
 
