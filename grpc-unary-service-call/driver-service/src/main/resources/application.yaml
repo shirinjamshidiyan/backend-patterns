@@ -1,0 +1,7 @@
+spring:
+  application:
+   name: driver-service
+
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT:9091}

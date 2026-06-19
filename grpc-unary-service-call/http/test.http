@@ -1,0 +1,31 @@
+@ride_base_url = http://localhost:8082/api/rides
+
+
+POST {{ride_base_url}}/find-driver
+Content-Type: application/json
+
+{
+  "latitude": 55.7050,
+  "longitude": 12.5780
+}
+
+### INVALID_ARGUMENT test ( latitude > 90)
+POST {{ride_base_url}}/find-driver
+Content-Type: application/json
+
+{
+  "latitude": 120,
+  "longitude": 12.5683
+}
+
+### UNAVAILABLE test ( affter shutting down driver-service)
+POST {{ride_base_url}}/find-driver
+Content-Type: application/json
+
+{
+  "latitude": 55.7050,
+  "longitude": 12.5780
+}
+
+
+
