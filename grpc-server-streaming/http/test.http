@@ -1,0 +1,36 @@
+@ride_base_url = http://localhost:8082/api/rides/driver-locations
+
+
+### Limited stream - normal server completion
+# Expected:
+# - Driver Service completes the gRPC stream normally after 5 updates
+# - Ride Service closes the SSE connection.
+GET {{ride_base_url}}/limited?latitude=55.67&longitude=12.56&updates=5
+Accept: text/event-stream
+
+
+### Limited stream - early client cancellation
+# Start the request and stop it before all 12 events are received.
+# Expected:
+# - Ride Service cancels the active gRPC call.
+# - Driver Service detects cancellation and stops its scheduled task.
+GET {{ride_base_url}}/limited?latitude=55.67&longitude=12.56&updates=12
+Accept: text/event-stream
+
+
+### Unlimited stream - client-controlled cancellation
+# Start the request, receive a few events, and then stop it manually.
+# Expected:
+# - Ride Service cancels the active gRPC call.
+# - Driver Service detects cancellation and stops producing updates.
+GET {{ride_base_url}}/unlimited?latitude=55.67&longitude=12.56
+Accept: text/event-stream
+
+
+### Driver Service unavailable
+# Stop Driver Service before running this request.
+# Expected:
+# - Ride Service logs a gRPC UNAVAILABLE error.
+# - The SSE request ends with a generic HTTP 500 because
+GET {{ride_base_url}}/limited?latitude=55.67&longitude=12.56&updates=5
+Accept: text/event-stream

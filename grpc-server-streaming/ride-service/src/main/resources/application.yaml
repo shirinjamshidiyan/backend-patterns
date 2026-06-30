@@ -1,0 +1,11 @@
+spring:
+  application:
+   name: ride-service
+
+grpc:
+  driverservice:
+    address: ${DRIVER_GRPC_HOST:localhost}
+    port: ${DRIVER_GRPC_PORT:9091}
+
+server:
+  port: ${SERVER_PORT:8082}

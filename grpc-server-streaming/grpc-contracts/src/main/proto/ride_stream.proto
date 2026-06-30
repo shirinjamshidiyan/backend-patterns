@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package serverstreaming.v1;
+
+option java_multiple_files = true;
+option java_outer_classname = "ServerStreamingProto";
+option java_package = "com.shirin.serverstreaming.grpc.v1";
+
+
+enum DriverStatus {
+  DRIVER_STATUS_UNSPECIFIED = 0;
+  DRIVER_STATUS_AVAILABLE = 1;
+  DRIVER_STATUS_BUSY = 2;
+}
+
+message Driver {
+  int64 id = 1;
+  string name = 2;
+  DriverStatus status = 3;
+  double driver_latitude = 4;
+  double driver_longitude = 5;
+}
+
+message DriversLimitedUpdateRequest{
+  double passenger_latitude = 1;
+  double passenger_longitude = 2;
+  int32 update_count = 3;
+}
+
+message DriversUnlimitedUpdateRequest{
+  double passenger_latitude = 1;
+  double passenger_longitude = 2;
+}
+
+message DriverLocationUpdate{
+  Driver driver = 1;
+  int32 sequence = 2;
+}
+
+service DriverService{
+
+  //gRPC Client: ride-service
+  //gRPC Server: driver-service
+  //Server-controlled normal completion
+  rpc WatchLimitedDriverLocations(DriversLimitedUpdateRequest)
+      returns (stream DriverLocationUpdate);
+
+  //gRPC Client: ride-service
+  //gRPC Server: driver-service
+  //Usually stopped through client cancellation
+  rpc WatchUnlimitedDriverLocations(DriversUnlimitedUpdateRequest)
+      returns (stream DriverLocationUpdate);
+
+}

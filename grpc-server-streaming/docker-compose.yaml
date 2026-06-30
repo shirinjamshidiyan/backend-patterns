@@ -1,0 +1,29 @@
+services:
+
+  driver-service:
+    build:
+      context: .
+      dockerfile: driver-service/Dockerfile
+    environment:
+      GRPC_SERVER_PORT: ${GRPC_SERVER_PORT}
+    ports:
+      - "9091:9091"
+
+
+  ride-service:
+    build:
+      context: .
+      dockerfile: ride-service/Dockerfile
+
+    environment:
+      SERVER_PORT: 8080
+      DRIVER_GRPC_HOST: driver-service
+      DRIVER_GRPC_PORT: ${GRPC_SERVER_PORT}
+
+    ports:
+      - "8082:8080"
+    depends_on:
+      - driver-service
+
+
+
