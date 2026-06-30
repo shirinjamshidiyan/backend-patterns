@@ -241,10 +241,10 @@ http/test.http
 All tests are sent through the Ride Service HTTP API.
 The request file includes:
 
-Normal completion of a limited stream
-Early cancellation of a limited stream
-Client-controlled cancellation of an unlimited stream
-Driver Service unavailability
+- Normal completion of a limited stream
+- Early cancellation of a limited stream
+- Client-controlled cancellation of an unlimited stream
+- Driver Service unavailability
 
 The gRPC methods can also be tested directly by importing the `.proto` file into Postman.
 
