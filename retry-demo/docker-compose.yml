@@ -1,0 +1,22 @@
+
+services:
+
+  inventory-service:
+    build:
+      context: .
+      dockerfile: inventory-service/Dockerfile
+    container_name: retry-demo-inventory
+    ports:
+      - "8081:8081"
+
+  order-service:
+    build:
+      context: .
+      dockerfile: order-service/Dockerfile
+    container_name: retry-demo-order
+    environment:
+      INVENTORY_BASE_URL: http://inventory-service:8081
+    ports:
+      - "8080:8080"
+    depends_on:
+      - inventory-service

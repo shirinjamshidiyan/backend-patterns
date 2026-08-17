@@ -1,4 +1,3 @@
-
 # Backend Patterns
 
 This repository contains small, focused examples of backend engineering patterns and communication techniques.
@@ -7,8 +6,9 @@ Each folder shows one important backend or distributed systems concept in a smal
 
 ## Projects
 
-| Project                                              | Focus                                                                                                               | Key Concepts                                                    |
-| ---------------------------------------------------- |---------------------------------------------------------------------------------------------------------------------| --------------------------------------------------------------- |
-| [Transactional Outbox](./transactional-outbox)       | Stores business data and outgoing Kafka events atomically, then publishes them through a scheduled outbox publisher | Transactional Outbox, Kafka, eventual consistency, retry        |
-| [gRPC Unary Service Call](./grpc-unary-service-call) | Shows synchronous service to service communication using one gRPC request and one response                          | gRPC, Protocol Buffers, blocking stub, deadline, status mapping |
-| [gRPC Server Streaming](./grpc-server-streaming) |  One request → multiple responses                          | Async stub, server-controlled completion, client-controlled cancellation, SSE |
+| Project | Focus | Key Concepts |
+|---|---|---|
+| [Transactional Outbox](./transactional-outbox) | Stores business data and outgoing Kafka events atomically, then publishes them through a scheduled outbox publisher | Transactional Outbox, Kafka, eventual consistency, retry |
+| [gRPC Unary Service Call](./grpc-unary-service-call) | Shows synchronous service-to-service communication using one gRPC request and one response | gRPC, Protocol Buffers, blocking stub, deadline, status mapping |
+| [gRPC Server Streaming](./grpc-server-streaming) | One request → multiple responses | gRPC, Protocol Buffers, async stub, server-controlled completion, client-controlled cancellation |
+| [Retry Demo](./retry-demo) | Shows how a service handles transient failures when calling another service | Resilience4j Retry, Spring AOP, RestClient, timeouts, 503, exponential backoff, jitter |

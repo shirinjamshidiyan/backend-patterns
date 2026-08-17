@@ -1,0 +1,66 @@
+### Retry Demo - Order Service
+
+
+###===========================================================
+### 1. SUCCESS : Inventory reservation succeeds.
+### Expected:
+### Inventory returns RESERVED / No retry / Order is created
+
+POST http://localhost:8080/orders?mode=SUCCESS
+Content-Type: application/json
+
+{
+  "productId": 1001,
+  "quantity": 2
+}
+
+### ==================================================================================
+### 2. REJECT : Inventory is available as a service, but business operation fails.
+### Expected:
+### Inventory returns NOT_RESERVED / No retry / Order is NOT created / GlobalExceptionHandler handles InventoryReservationRejectedException
+
+POST http://localhost:8080/orders?mode=REJECT
+Content-Type: application/json
+
+{
+  "productId": 1001,
+  "quantity": 2
+}
+
+###=================================================================================
+### 3. SERVICE_UNAVAILABLE : Inventory returns HTTP 503.
+### Expected:
+### Inventory returns 503 / Retry is triggered / Multiple attempts are made / After max attempts, exception is propagated / GlobalExceptionHandler returns final error response
+
+POST http://localhost:8080/orders?mode=SERVICE_UNAVAILABLE
+Content-Type: application/json
+
+{
+  "productId": 1001,
+  "quantity": 2
+}
+
+###==================================================================================
+### 4. SLOW : Inventory sleeps for 5 seconds.
+### Order Service read-timeout is shorter than that.
+### Expected:
+### Request times out  / ResourceAccessException / Retry is triggered / Each attempt eventually times out / After max attempts, final timeout error is returned
+
+POST http://localhost:8080/orders?mode=SLOW
+Content-Type: application/json
+
+{
+  "productId": 1001,
+  "quantity": 2
+}
+
+
+### Actuator
+### ============================================================
+
+### Order Service health
+GET http://localhost:8080/actuator/health
+
+
+### Inventory Service health
+GET http://localhost:8081/actuator/health
