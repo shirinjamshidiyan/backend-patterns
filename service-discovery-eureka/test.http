@@ -1,0 +1,25 @@
+### 1) GET through Order, letting the selected Inventory instance use its own default mode.
+GET http://localhost:8080/api/v1/orders/inventory/1000
+Accept: application/json
+
+
+
+### 2) Create an order and reserve inventory.
+POST http://localhost:8080/api/v1/orders
+Content-Type: application/json
+
+{
+  "requestId": "req-001",
+  "productId": 1001,
+  "quantity": 5
+}
+
+### 3) Validation example: quantity=0 should return HTTP 400.
+POST http://localhost:8080/api/v1/orders
+Content-Type: application/json
+
+{
+  "requestId": "req-invalid",
+  "productId": 1001,
+  "quantity": 0
+}

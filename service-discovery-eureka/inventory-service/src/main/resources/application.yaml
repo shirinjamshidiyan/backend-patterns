@@ -1,0 +1,49 @@
+spring:
+  application:
+   name: inventory-service
+
+server:
+  port: ${SERVER_PORT:8081} # Local default; Docker runs every replica on container port 8080.
+
+
+eureka:
+
+  ######### Most settings below match Eureka client defaults or common default values ########
+  ######## They are kept explicit to document important discovery, heartbeat, and registry behaviors##########
+  client:
+    # Keep a local copy of the Eureka registry for service discovery.
+    fetch-registry: true
+
+    # Register this service so other services can discover it.
+    register-with-eureka: true
+
+    # How often this client refreshes its local registry cache
+    registry-fetch-interval-seconds: 30
+
+    healthcheck:
+      # Propagate Spring Boot health status to Eureka.
+      enabled: true
+
+    service-url:
+      # Eureka registry location; Docker overrides it with the service DNS name
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+  instance:
+    # Must be unique when multiple replicas register under one service ID.
+    instance-id: ${INSTANCE_ID:${spring.application.name}-${server.port}}
+
+    # Send a heartbeat every 30 seconds.
+    lease-renewal-interval-in-seconds: 30
+
+    # Eureka may evict this instance after 90 seconds without heartbeats.
+    lease-expiration-duration-in-seconds: 90
+
+    # Use IP instead of hostname only when your environment requires it.
+    prefer-ip-address: false
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info

@@ -1,0 +1,55 @@
+server:
+  port: ${SERVER_PORT:8761}
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  client:
+    # A standalone Eureka server should not register itself as a client.
+    register-with-eureka: false
+
+    # The standalone server does not need to fetch another registry.
+    fetch-registry: false
+
+    # Peer URL; points to itself in standalone mode.
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+  instance:
+    # Stable hostname of this Eureka node.
+    hostname: ${EUREKA_HOSTNAME:localhost}
+
+  server:
+    ########## Mostly Eureka defaults, defined explicitly for reference and easier tuning.########
+
+    # Protect registry entries during temporary network failures.
+    enable-self-preservation: true
+
+    # Expected client heartbeat interval.
+    expected-client-renewal-interval-seconds: 30
+
+    # Refresh the server response cache every 30 seconds.
+    response-cache-update-interval-ms: 30000
+
+    # Expire cached registry responses after 180 seconds.
+    response-cache-auto-expiration-in-seconds: 180
+
+    # Keep the read-only response cache for efficient registry fetches.
+    use-read-only-response-cache: true
+
+    # Do not delay Eureka server startup when no peer registry data is available.
+    wait-time-in-ms-when-sync-empty: 0
+
+    # Recalculate the self-preservation renewal threshold every 15 minutes.
+    renewal-threshold-update-interval-ms: 900000
+
+    # How often Eureka scans for expired instances; default-like value is 60s.
+    eviction-interval-timer-in-ms: 60000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
