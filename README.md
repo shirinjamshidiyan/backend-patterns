@@ -13,7 +13,7 @@ Each project shows one important backend or distributed systems concept in a sma
 | [gRPC Server Streaming](./grpc-server-streaming) | Shows one request producing multiple streamed responses from the server | gRPC, Protocol Buffers, async stub, server-controlled completion, client-controlled cancellation |
 | [Eureka Service Discovery](./service-discovery-eureka) | Shows service registration, discovery, and client-side load balancing across multiple service instances | Netflix Eureka, Spring Cloud LoadBalancer, RestClient, service discovery, registration           |
 | [Retry Demo](./retry-demo) | Shows how a service handles transient failures when calling another service | Resilience4j Retry, Spring AOP, RestClient, timeouts, 503 responses, exponential backoff, jitter |
-| [Retry Demo](./retry-demo) | Shows API gateway routing, filtering, request tracing, service discovery integration, and distributed rate limiting | Spring Cloud Gateway, WebFlux, Eureka, Spring Cloud LoadBalancer, global/default/custom filters, correlation ID, OpenFeign, Redis RequestRateLimiter, Actuator|
+| [Gateway Rate Limiter Demo](./gateway-ratelimiter-demo) | Shows API gateway routing, filtering, request tracing, service discovery integration, and distributed rate limiting | Spring Cloud Gateway, WebFlux, Eureka, Spring Cloud LoadBalancer, global/default/custom filters, correlation ID, OpenFeign, Redis RequestRateLimiter, Actuator|
 
 
 
