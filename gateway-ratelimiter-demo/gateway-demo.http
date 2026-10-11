@@ -1,0 +1,54 @@
+
+### ######################## GATEWAY DEMO ########################
+
+### 1) Check product availability through Order Service
+GET http://localhost:7070/orders/inventory/3
+Content-Type: application/json
+X-Client-Id: shirin
+
+
+### 2) Create an order and reserve inventory
+POST http://localhost:7070/orders
+Content-Type: application/json
+X-Client-Id: shirin
+
+{
+  "requestId": "req-001",
+  "productId": 1001,
+  "quantity": 5
+}
+
+
+### 3) Get inventory directly through Gateway
+GET http://localhost:7070/inventory/3
+Content-Type: application/json
+X-Client-Id: shirin
+
+
+### 4) Reserve inventory directly through Gateway
+POST http://localhost:7070/inventory/reservations
+Content-Type: application/json
+X-Client-Id: shirin
+
+{
+  "requestId": "req-002",
+  "productId": 1001,
+  "quantity": 5
+}
+
+
+### 5) Programmatic RouteLocator example
+GET http://localhost:7070/check/3
+
+
+### 6) Missing rate-limit key
+### Expected: rejected because X-Client-Id is missing
+GET http://localhost:7070/inventory/3
+
+
+### 7) Redis rate limiter
+### Run repeatedly with the same client ID.
+### Successful responses contain X-RateLimit-* headers.
+### When the bucket is exhausted: HTTP 429.
+GET http://localhost:7070/inventory/3
+X-Client-Id: rate-limit-test

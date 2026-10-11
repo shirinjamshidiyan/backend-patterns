@@ -1,0 +1,90 @@
+server:
+  port: ${SERVER_PORT:7070}
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false
+#              lower-case-service-id: false
+
+          routes:
+            - id: "order-service-route"
+              uri: lb://ORDER-SERVICE
+              predicates:
+              - Path=/orders/**
+              filters:
+                - RewritePath=/orders(?<segment>.*), /api/v1/orders$\{segment}
+                - AddRequestHeader=X-Route-Source, gateway-order-route
+                - ResponseTime
+                - name: RequestRateLimiter
+                  args:
+                    key-resolver: "#{@clientIdKeyResolver}"
+                    redis-rate-limiter.replenishRate: 10
+                    redis-rate-limiter.burstCapacity: 20
+                    redis-rate-limiter.requestedTokens: 1
+
+            - id: "inventory-service-route"
+              uri: lb://INVENTORY-SERVICE
+              predicates:
+              - Path=/inventory/**
+
+              filters:
+                - RewritePath=/inventory/(?<segment>.*), /api/v1/inventory/$\{segment}
+                - AddResponseHeader=X-Service, inventory
+                - name: RequestRateLimiter
+                  args:
+                    key-resolver: "#{@clientIdKeyResolver}"
+                    redis-rate-limiter.replenishRate: 10
+                    redis-rate-limiter.burstCapacity: 20
+                    redis-rate-limiter.requestedTokens: 1
+
+            - id: eureka-dashboard
+              uri: ${EUREKA_BASE_URL:http://localhost:8761}
+              predicates:
+              - Path=/eureka
+              filters:
+              - SetPath=/
+
+            - id: eureka-resources
+              uri: ${EUREKA_BASE_URL:http://localhost:8761}
+              predicates:
+              - Path=/eureka/**
+
+          # Applies to YAML/property-defined routes
+          default-filters:
+            - AddResponseHeader=X-Gateway, spring-cloud-gateway
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+  instance:
+    instance-id: ${INSTANCE_ID:${spring.application.name}-${server.port}}
+    hostname: ${APP_HOSTNAME:localhost}
+    prefer-ip-address: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics, health, info, gateway
+  endpoint:
+    gateway:
+      access: read_only
