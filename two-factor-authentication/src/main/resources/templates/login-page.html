@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js" ></script>
+    <style>
+        .navbar {
+            background-color: cadetblue;
+        }
+    </style>
+</head>
+<body>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <h1>Multi-Factor Authentication</h1>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+
+        <div th:if="${param.error}">
+            <div class="alert alert-info">Invalid email or password.</div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-info"> You have been logged out successfully.</div>
+        </div>
+        <div class="col-md-8 mx-auto rounded border p-4 m-4">
+            <h2 class="text-center mb-5">Login page</h2>
+            <form method="post" th:action="@{/loginProcess}" >
+
+
+                <!--    UserName            -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8 ">
+                        <input class="form-control" type="email" name="username" required>
+                    </div>
+                </div>
+                <!--    Password            -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Password</label>
+                    <div class="col-sm-8 ">
+                        <input class="form-control" type="password" name="password"  required>
+                    </div>
+                </div>
+
+                <!--    Submit            -->
+                <div class="row mb-3">
+                    <div class="offset-sm-4 col-sm-4 d-grid">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

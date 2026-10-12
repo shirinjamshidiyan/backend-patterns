@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Send Verification Code</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .navbar {
+            background-color: cadetblue;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <h1>Multi-Factor Authentication</h1>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-8 mx-auto rounded border p-4 m-4">
+
+            <h2 class="text-center mb-4">
+                Verification Required
+            </h2>
+
+            <p class="text-center text-muted mb-4">
+                Your password has been verified.
+                Send a verification code to continue.
+            </p>
+
+            <form method="post" th:action="@{/ott/generate}">
+
+                <input type="hidden" name="username" th:value="${username}">
+
+                <div class="row mb-3">
+
+                    <div class="offset-sm-4 col-sm-4 d-grid">
+
+                        <button type="submit" class="btn btn-primary">Send Verification Code</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+services:
+  security-db:
+    image: postgres:16
+    ports:
+      - "5050:5432"
+    environment:
+      POSTGRES_DB: security-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d security-db"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mfa-mailpit
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+
+volumes:
+  pgdata:

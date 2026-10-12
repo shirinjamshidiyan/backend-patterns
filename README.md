@@ -14,7 +14,7 @@ Each project shows one important backend or distributed systems concept in a sma
 | [Eureka Service Discovery](./service-discovery-eureka) | Shows service registration, discovery, and client-side load balancing across multiple service instances | Netflix Eureka, Spring Cloud LoadBalancer, RestClient, service discovery, registration           |
 | [Retry Demo](./retry-demo) | Shows how a service handles transient failures when calling another service | Resilience4j Retry, Spring AOP, RestClient, timeouts, 503 responses, exponential backoff, jitter |
 | [Gateway Rate Limiter Demo](./gateway-ratelimiter-demo) | Shows API gateway routing, filtering, request tracing, service discovery integration, and distributed rate limiting | Spring Cloud Gateway, WebFlux, Eureka, Spring Cloud LoadBalancer, global/default/custom filters, correlation ID, OpenFeign, Redis RequestRateLimiter, Actuator|
-
+| [Two-Factor Authentication](./two-factor-authentication) | Shows multi-factor login with password authentication followed by an email-delivered one-time token | Spring Security, password authentication, One-Time Token (OTT), JavaMailSender, PostgreSQL, JPA, role-based authorization, token expiry, single-use validation, Mailpit |
 
 
 ## Tech Stack
